@@ -17,20 +17,23 @@ import lombok.extern.slf4j.Slf4j;
 public class GlobalExceptionHandler {
 	
 @ExceptionHandler(Exception.class)
-public ResponseEntity<ErrorDetails> Exception(Exception e,WebRequest req){
+public ResponseEntity<ErrorDetails> exception(Exception e,WebRequest req){
 	log.error("bad request");
 	return new ResponseEntity<>(new ErrorDetails(e.getMessage(),req.getDescription(false),LocalDateTime.now()),HttpStatus.BAD_REQUEST);
 }
+
 @ExceptionHandler(PlantException.class)
 public ResponseEntity<ErrorDetails> PlantException(PlantException e,WebRequest req){
 	log.error("bad request");
 	return new ResponseEntity<>(new ErrorDetails(e.getMessage(),req.getDescription(false),LocalDateTime.now()),HttpStatus.BAD_REQUEST);
 }
+
 @ExceptionHandler(NoHandlerFoundException.class)
 public ResponseEntity<ErrorDetails> NoHandlerFoundException(NoHandlerFoundException e,WebRequest req){
 	log.error("bad request");
 	return new ResponseEntity<>(new ErrorDetails(e.getMessage(),req.getDescription(false),LocalDateTime.now()),HttpStatus.BAD_REQUEST);
 }
+
 @ExceptionHandler(MethodArgumentNotValidException.class)
 public ResponseEntity<ErrorDetails> MethodArgumentNotValidException(MethodArgumentNotValidException e,WebRequest req){
 	log.error("bad request");
