@@ -40,4 +40,14 @@ public ResponseEntity<ErrorDetails> MethodArgumentNotValidException(MethodArgume
 	return new ResponseEntity<>(new ErrorDetails(e.getMessage(),req.getDescription(false),LocalDateTime.now()),HttpStatus.BAD_REQUEST);
 }
 
+@ExceptionHandler(CustomerException.class)
+public ResponseEntity<ErrorDetails> handleCustomerExceptions(CustomerException ce,WebRequest req){
+	
+	ErrorDetails myErrorDetails = new ErrorDetails();
+	
+	
+	
+	return new ResponseEntity<ErrorDetails>(new ErrorDetails(ce.getMessage(),req.getDescription(false),LocalDateTime.now()),HttpStatus.BAD_REQUEST);
+}
+
 }
