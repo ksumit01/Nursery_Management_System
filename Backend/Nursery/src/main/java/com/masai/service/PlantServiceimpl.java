@@ -55,14 +55,15 @@ public class PlantServiceimpl implements PlantService{
 	}
 
 	@Override
-	public Plant deletePlant(Integer plantid) {
+	public Plant deletePlant(Plant plant) {
 		
-        log.info("Plant Deleted Successfully");
-     
-		if(plantid==null)throw new PlantException("Plant details are not valid !!");
+     log.info("Plant Deleted Successfully");
 		
-        Optional<Plant> newPlant= plantrepo.findById(plantid);
-     
+		if(plant==null) throw new PlantException("Plant details are not valid !!");
+		
+		
+		Optional<Plant> newPlant= plantrepo.findById(plant.getPlantId());
+		
 		if(!newPlant.isPresent()) throw new PlantException("This plant does not existed !!!");
 		
 		Plant plant1= newPlant.get();
@@ -121,15 +122,8 @@ public class PlantServiceimpl implements PlantService{
 	@Override
 	public List<Plant> viewAllPlants(String typeOfplant) {
 		
-        log.info("Plants viewed Successfully");
-        
-        Pageable p= PageRequest.of(0, 5,Sort.by("typeOfPlant").ascending());
-		
-		Page<Plant> Plants= plantrepo.findAll(p);
-		
-		if(Plants.isEmpty())throw new PlantException("No Plant Found !!!");
-		
-		return Plants.toList();
+		Optional<Plant> newPlant= plantrepo.findByTypeOfPlant(typeOfplant);
+		return null;
 	}
 
 }
