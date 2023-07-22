@@ -75,8 +75,8 @@ import lombok.NoArgsConstructor;
 		@NotNull	
 		private Integer seedsPerPacket;
 		
-//		@OneToOne(fetch = FetchType.EAGER)
-//		private Planter planter;
+		@OneToOne(fetch = FetchType.EAGER)
+		private Planter planter;
 		
 		@ManyToOne(cascade = CascadeType.ALL)
 		@JsonIgnore

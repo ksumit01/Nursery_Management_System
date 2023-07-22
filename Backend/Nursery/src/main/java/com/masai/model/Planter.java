@@ -1,18 +1,27 @@
 package com.masai.model;
 
 
+import java.util.List;
+
+import org.springframework.data.annotation.Id;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import jakarta.validation.constraints.*;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import lombok.ToString;
-import org.springframework.data.annotation.Id;
-
-import java.util.List;
 
 @Entity
 @Data
@@ -20,9 +29,8 @@ import java.util.List;
 @AllArgsConstructor
 @ToString
 public class Planter {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer planterId;
 
     @NotNull(message =  "planter hight is mandatory")
@@ -51,9 +59,17 @@ public class Planter {
 
     @Min(value=1 , message = "Planter cost should not be less than 1")
     private Double planterCost;
-
-
+    
+    @ManyToOne(cascade = CascadeType.ALL)
+	@JsonIgnore
+	private Orders orders;
+    
+    @OneToOne(mappedBy = "planter",cascade = CascadeType.ALL)
+	@JsonIgnore
     private List<Plant> plants;
-//    private List<Seed> seeds;
+    
+    @OneToOne(mappedBy = "planter",cascade = CascadeType.ALL)
+	@JsonIgnore
+    private List<Seed> seeds;
 
 }
