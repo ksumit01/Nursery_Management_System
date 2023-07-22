@@ -17,7 +17,6 @@ import lombok.ToString;
 @ToString
 public class CurrentUserSession {
 	
-
 	@Id
 	@Column(unique = true)
 	private Integer userId;
@@ -26,10 +25,5 @@ public class CurrentUserSession {
 	private String token;
 	
 	private LocalDateTime localDateTime;
-
-	
-
-	
-	
 	
 }
