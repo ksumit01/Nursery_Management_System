@@ -1,9 +1,15 @@
 package com.masai.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -63,6 +69,11 @@ private String plantDescription;
 private Integer plantsStock;
 @NotNull
 private double plantCost;
+@ManyToOne(cascade = CascadeType.ALL)
+@JsonIgnore
+private Orders orders;
 
+//@OneToOne(fetch = FetchType.EAGER)
+//private Planter planter;
 
 }
