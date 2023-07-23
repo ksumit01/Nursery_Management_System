@@ -1,100 +1,87 @@
-package com.masai.controller;
+package com.masai.Controller;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.masai.exception.PlanterException;
-import com.masai.model.Planter;
-import com.masai.service.PlanterServiceImpl;
+import com.masai.Entity.Planter;
+import com.masai.Exception.PlanterException;
+import com.masai.Service.PlanterService;
 
 import jakarta.validation.Valid;
 
+@RestController
+@CrossOrigin(origins = "*")
 public class PlanterController {
-	
-	@Autowired 
-	private PlanterServiceImpl Planterservice;
-	/*
-	{
-		   "planterHeight":5.4,
-		   "planterCapacity":7,
-		   "drinageHole":9, 
-		   "planterColor":"red",
-		   "planterShape":"round",
-		   "planterStock":80,
-		   "planterCost":700,
-		   "orders":{
-		       "orderDate":"12/02/2023",
-		       "transactionMode":"online",
-		       "quantity":"2",
-		       "totalCost":"7000.0"
-		       
-		   }
-		}
-	*/
-	@PostMapping("/planters")
-	public ResponseEntity<Planter> savePlanterHandller(@Valid @RequestBody Planter planter) throws PlanterException {
-		
-		Planter planter1 = Planterservice.addPlanter(planter);
-		
-		return new ResponseEntity<>(planter1, HttpStatus.ACCEPTED);
-	}
-	
-	@PutMapping("/UpdatePlanter")
-	public ResponseEntity<Planter> updatePlanterHandller(@Valid @RequestBody Planter planter) throws PlanterException {
-		
-		
-		Planter planter1 = Planterservice.updatePlanter(planter);
-		
-		return new ResponseEntity<>(planter1, HttpStatus.ACCEPTED);
-	}
-	
-	
-	@DeleteMapping("/DeletePlanter/{planterid}")
-	public ResponseEntity<Planter> DeletePlanterHandller(@PathVariable("planterid") Integer PlanterId) throws PlanterException {
-		
-		Planter planter1 = Planterservice.deletePlanter(PlanterId);
-		
-		return new ResponseEntity<>(planter1, HttpStatus.ACCEPTED);
-	}
-	
-	@GetMapping("/ViewPlanter/{planterId}")
-	public ResponseEntity<Planter> viewPlanterHandller(@PathVariable("planterId") Integer PlanterId) throws PlanterException {
-		
-		Planter planter1 = Planterservice.viewPlanter(PlanterId);
-		
-		return new ResponseEntity<>(planter1, HttpStatus.ACCEPTED);
-	}
-	
-	@GetMapping("/ViewPlanterByShape/{Plantershape}")
-	public ResponseEntity <List<Planter>> viewPlanterByShapeHandller(@PathVariable("Plantershape") String plantershape) throws PlanterException {
-		
-		List<Planter> planter = Planterservice.viewPlanter(plantershape);
-		
-		return new ResponseEntity<>(planter, HttpStatus.ACCEPTED);
-	}
 
-	@GetMapping("/plantViewType/{mincost}/{maxcost}")
-	public ResponseEntity<List<Planter>> viewPlanterByCostPlantHandller(@PathVariable("mincost") double minCost,@PathVariable("maxcost") double maxCost) throws PlanterException {
+	@Autowired
+	private PlanterService planterService;
+	
+	@PostMapping("/planters")
+	public ResponseEntity<Planter> addNewPlanter(@Valid @RequestBody Planter planter) throws PlanterException{
 		
-		List<Planter> planters = Planterservice.viewAllPlanters(minCost, maxCost);
+		Planter savedPlanter = planterService.addPlanter(planter);
 		
-		return new ResponseEntity<>(planters, HttpStatus.ACCEPTED);
+		return new ResponseEntity<Planter>(savedPlanter,HttpStatus.CREATED);
 	}
 	
-	@GetMapping("/ViewAllPlanters")
-	public ResponseEntity<List<Planter>> viewAllPlantHandller() throws PlanterException {
+	@PutMapping("/planters/{planterId}")
+	public ResponseEntity<Planter> updatePlanter(@PathVariable Integer planterId, @Valid @RequestBody Planter planter) throws PlanterException{
 		
-		List<Planter> planters = Planterservice.viewAllPlanters();
+		System.out.println(planter);
 		
-		return new ResponseEntity<>(planters, HttpStatus.ACCEPTED);
+		Planter updatedPlanter = planterService.updatePlanter(planterId, planter);
+		
+		return new ResponseEntity<Planter>(updatedPlanter,HttpStatus.OK);
+	}
+	
+	@DeleteMapping("/planters/{planterId}")
+	public ResponseEntity<Planter> deletePlanter(@PathVariable Integer planterId) throws PlanterException{
+		
+		Planter deletedPlanter = planterService.deletePlanter(planterId);
+		
+		return new ResponseEntity<Planter>(deletedPlanter, HttpStatus.OK);
+	}
+	
+	@GetMapping("/planters/{planterId}")
+	public ResponseEntity<Planter> getPlanterById(@PathVariable Integer planterId) throws PlanterException{
+		
+		Planter planter = planterService.viewPlanterById(planterId);
+		
+		return new ResponseEntity<Planter>(planter, HttpStatus.FOUND);
+	}
+	
+	@GetMapping("/planters")
+	public ResponseEntity<List<Planter>> getAllPlanters() throws PlanterException{
+		
+		List<Planter> planterList = planterService.viewAllPlanters();
+		
+		return new ResponseEntity<List<Planter>>(planterList, HttpStatus.FOUND);
+	}
+	
+	@GetMapping("/planters/{startCost}/{endCost}")
+	public ResponseEntity<List<Planter>> getAllPlanterByCost(@PathVariable Double startCost, @PathVariable Double endCost) throws PlanterException{
+		
+		List<Planter> planterList = planterService.viewPlantersByCost(startCost, endCost);
+		
+		return new ResponseEntity<List<Planter>>(planterList, HttpStatus.FOUND);
+	}
+	
+	@GetMapping("/plantersByShape/{planterShape}")
+	public ResponseEntity<List<Planter>> getPlanterById(@PathVariable String planterShape) throws PlanterException{
+		
+		List<Planter> planterList = planterService.viewPlantersByShape(planterShape);
+		
+		return new ResponseEntity<List<Planter>>(planterList, HttpStatus.FOUND);
 	}
 }
