@@ -1,89 +1,53 @@
 package com.masai.model;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class Orders {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int bookingOrderId;
-	@NotBlank
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@JsonIgnore
+	private Integer bookingOrderId;
+	
+	@JsonFormat(pattern = "DD-MM-YYYY")
+	@NotBlank(message = "{blank.invalid}")
 	private LocalDate orderDate;
-	@NotNull
-	@NotEmpty
-	@Size(min = 2, max = 50, message = "legth of transactionMode should be in the given range")
+	
+	@NotEmpty(message = "{empty.invalid}")
+	@NotBlank(message = "{blank.invalid}")
 	private String transactionMode;
-	@Positive(message = "quantity must be possitive")
-	@NotNull(message = "quantity should not be null")
-	private int quantity;
-	@Positive(message = "totalCost must be possitive")
-	@NotNull(message = "totalCost should not be null")
-	private double totalCost;
 	
-	@ManyToOne
-	private Customer customer;
+	@NotNull(message = "{null.invalid}")
+	private Integer quantity;
 	
-	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-	private List<Planter> planterList = new ArrayList<>();
+	@NotNull(message = "{null.invalid}")
+	private Double totalCost;
 	
-	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-	private List<Plant> plantList = new ArrayList<>();
+	@NotNull(message = "{null.invalid}")
+	private Integer customerId;
 	
-	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-	private List<Seed> seedList = new ArrayList<>();
-	
-	
-	public Orders(@NotBlank LocalDate orderDate,
-			@NotNull @NotEmpty @Size(min = 2, max = 50, message = "legth of transactionMode should be in the given range") String transactionMode,
-			@Positive(message = "quantity must be possitive") @NotNull(message = "quantity should not be null") int quantity,
-			@Positive(message = "totalCost must be possitive") @NotNull(message = "totalCost should not be null") double totalCost,
-			List<Planter> planterList, List<Plant> plantList, List<Seed> seedList) {
-		super();
-		this.orderDate = orderDate;
-		this.transactionMode = transactionMode;
-		this.quantity = quantity;
-		this.totalCost = totalCost;
-		this.planterList = planterList;
-		this.plantList = plantList;
-		this.seedList = seedList;
-	}
-	public Orders(int bookingOrderId, @NotBlank LocalDate orderDate,
-			@NotNull @NotEmpty @Size(min = 2, max = 50, message = "legth of transactionMode should be in the given range") String transactionMode,
-			@Positive(message = "quantity must be possitive") @NotNull(message = "quantity should not be null") int quantity,
-			@Positive(message = "totalCost must be possitive") @NotNull(message = "totalCost should not be null") double totalCost) {
-		super();
-		this.bookingOrderId = bookingOrderId;
-		this.orderDate = orderDate;
-		this.transactionMode = transactionMode;
-		this.quantity = quantity;
-		this.totalCost = totalCost;
-	}
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Planter> planters;
 
-	
-	
-	
-	
 }
