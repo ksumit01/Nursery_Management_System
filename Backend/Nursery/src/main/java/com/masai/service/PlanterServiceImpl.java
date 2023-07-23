@@ -1,22 +1,22 @@
-package com.masai.Service;
+package com.masai.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.masai.Entity.Plant;
-import com.masai.Entity.Planter;
-import com.masai.Entity.Seed;
-import com.masai.Exception.PlanterException;
-import com.masai.Repository.PlanterRepository;
+import com.masai.exception.PlanterException;
+import com.masai.model.Plant;
+import com.masai.model.Planter;
+import com.masai.model.Seed;
+import com.masai.repository.Planterrepository;
+
 
 @Service
 public class PlanterServiceImpl implements PlanterService{
 
 	@Autowired
-	private PlanterRepository planterRepository;
+	private Planterrepository planterRepository;
 	
 	@Override
 	public Planter addPlanter(Planter planter) throws PlanterException {

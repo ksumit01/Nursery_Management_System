@@ -1,15 +1,15 @@
-package com.masai.Repository;
+package com.masai.repository;
 
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.masai.Entity.Planter;
-import com.masai.Exception.PlanterException;
+import com.masai.exception.PlanterException;
+import com.masai.model.Planter;
 
 @Repository
-public interface PlanterRepository extends JpaRepository<Planter, Integer>{
+public interface Planterrepository extends JpaRepository<Planter, Integer>{
 
 	public List<Planter> findByPlanterShape(String planterShape) throws PlanterException;
 	

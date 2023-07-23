@@ -32,7 +32,7 @@ public class OrdersServiceImpl implements OrdersService{
 		updatedOrder.setQuantity(order.getQuantity());
 		updatedOrder.setTransactionMode(order.getTransactionMode());
 		updatedOrder.setTotalCost(order.getTotalCost());
-		updatedOrder.setPlanterList(order.getPlanterList());
+		updatedOrder.setPlanters(order.getPlanters());
 		
 		return ordersRepo.save(updatedOrder);
 	}

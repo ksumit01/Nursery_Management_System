@@ -6,15 +6,15 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.masai.model.Plant;
+import com.masai.repository.Plantrepository;
 import com.masai.exception.PlantException;
-import com.masai.repository.PlantRepository;
+import com.masai.model.Plant;
 
 @Service
 public class PlantServiceImpl implements PlantService {
 	
 	@Autowired
-	private PlantRepository plantRepository;
+	private Plantrepository plantRepository;
 
 	@Override
 	public Plant addPlant(Plant plant) throws PlantException {

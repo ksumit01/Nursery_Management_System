@@ -64,7 +64,7 @@ public class Customer {
 	@JoinTable(name = "address")
 	private Set<Address> addressSet = new HashSet<>();
 	
-	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "customer")
-	@JsonIgnore
-	private List<Orders> orderList= new ArrayList<>();
+//	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "customer")
+//	@JsonIgnore
+//	private List<Orders> orderList= new ArrayList<>();
 }

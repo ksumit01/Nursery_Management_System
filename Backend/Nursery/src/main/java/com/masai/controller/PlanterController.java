@@ -1,4 +1,4 @@
-package com.masai.Controller;
+package com.masai.controller;
 
 import java.util.List;
 
@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.masai.Entity.Planter;
-import com.masai.Exception.PlanterException;
-import com.masai.Service.PlanterService;
+import com.masai.exception.PlanterException;
+import com.masai.model.Planter;
+import com.masai.service.PlanterService;
 
 import jakarta.validation.Valid;
 

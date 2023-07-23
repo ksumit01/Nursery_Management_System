@@ -14,9 +14,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.masai.model.Plant;
 import com.masai.exception.PlantException;
-import com.masai.service.PlantService;
+import com.masai.model.Plant;
+import com.masai.service.PlantServiceImpl;
+import com.masai.service.PlanterServiceImpl;
 
 import jakarta.validation.Valid;
 
@@ -25,7 +26,7 @@ import jakarta.validation.Valid;
 public class PlantController {
 
 	@Autowired
-	private PlantService plantService;
+	private PlantServiceImpl plantService;
 	
 	@PostMapping("/plants")
 	public ResponseEntity<Plant> addNewPlant(@Valid @RequestBody Plant plant) throws PlantException{
