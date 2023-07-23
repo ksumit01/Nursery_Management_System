@@ -1,75 +1,68 @@
 package com.masai.model;
 
-
-import java.util.List;
-
-import org.springframework.data.annotation.Id;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
-@Entity
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@NoArgsConstructor
+@Entity
 public class Planter {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer planterId;
-
-    @NotNull(message =  "planter hight is mandatory")
-    @Min(value=1 , message = "Planter height should not be less than 1")
-    private Double planterHeight;
-
-    @NotNull(message =  "planter capcity is mandatory")
-    @Min(value=1 , message = "Planter capacity should not be less than 1")
-    private Double planterCapacity;
-
-    @Min(value=1 , message = "Drainage holes should not be less than1")
-    private Integer drainageHoles;
-
-    @NotBlank(message = "blank space is not allowed must have character")
-    @NotEmpty(message = "empty string is not allowed")
-    @Size(min=3, max = 12, message="planter color must contain 3 to 12 characters")
-    private String planterColor;
-
-    @NotBlank(message = "blank space is not allowed must have character")
-    @NotEmpty(message = "empty string is not allowed")
-    @Size(min=3, max = 12, message="planter shape must contain 3 to 12 characters")
-    private String planterShape;
-
-    @Min(value=0 , message = "Planter stock should not be negative less than 0")
-    private Integer planterStock;
-
-    @Min(value=1 , message = "Planter cost should not be less than 1")
-    private Double planterCost;
-    
-    @ManyToOne(cascade = CascadeType.ALL)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)	
 	@JsonIgnore
-	private Orders orders;
-    
-    @OneToOne(mappedBy = "planter",cascade = CascadeType.ALL)
-	@JsonIgnore
-    private List<Plant> plants;
-    
-    @OneToOne(mappedBy = "planter",cascade = CascadeType.ALL)
-	@JsonIgnore
-    private List<Seed> seeds;
-
+	private Integer planterId;
+	
+	private String url;
+	
+	@Min(value=1 , message = "Planter height should be more than 0")
+	@NotNull(message = "{null.invalid}")
+	private Double planterHeight;
+	
+	@Min(value=1 , message = "Planter capacity cannot be 0")
+	@NotNull(message = "{null.invalid}")
+	private Double planterCapacity;
+	
+	@Min(value=5 , message = "Drainage holes should not be 5")
+	@NotNull(message = "{null.invalid}")
+	private Integer drainageHoles;
+	
+	@NotBlank(message = "{blank.invalid}")
+	@NotEmpty(message = "{empty.invalid}")
+	private String planterColor;
+	
+	@NotBlank(message = "{blank.invalid}")
+	@NotEmpty(message = "{empty.invalid}")
+	private String planterShape;
+	
+	@Min(value=1 , message = "Planter stock should be atleast 1")
+	@NotNull(message = "{null.invalid}")
+	private Integer planterStock;
+	
+	@Min(value=1 , message = "Planter cost cannot be 0")
+	@NotNull(message = "{null.invalid}")
+	private Integer planterCost;
+	
+	@OneToOne(cascade= {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
+	private Seed Seeds;
+	
+	@OneToOne(cascade= {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
+	private Plant Plants;
+	
+	
+	
 }

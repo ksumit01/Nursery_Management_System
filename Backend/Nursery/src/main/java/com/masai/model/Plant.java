@@ -2,11 +2,7 @@ package com.masai.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -21,60 +17,57 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class Plant {
-@Id
-@GeneratedValue(strategy=GenerationType.IDENTITY)
-private Integer plantId;
-@NotNull
-@Min(value=1 ,message="minimum height should be 1")
-private Integer plantheight;
-@NotNull
-@NotBlank
-@NotEmpty
-private String plantSpread;
-@NotNull
-@NotBlank
-@NotEmpty
-private String commonName;
-@NotNull
-@NotBlank
-@NotEmpty
-private String bloomTime;
-@NotNull
-@NotBlank
-@NotEmpty
-private String medicinalOrCulinaryUse;
-@NotNull
-@NotBlank
-@NotEmpty
-private String difficultyLevel;
-@NotNull
-@NotBlank
-@NotEmpty
-private String temperature;
-@NotNull
-@NotBlank
-@NotEmpty
-private String typeOfPlant;
-@NotNull
-@NotBlank
-@NotEmpty
-@Size(min = 10)
-private String plantDescription;
-@NotNull
-@NotBlank
-@NotEmpty
-private Integer plantsStock;
-@NotNull
-private double plantCost;
-
-@ManyToOne(cascade = CascadeType.ALL)
-@JsonIgnore
-private Orders orders;
-
-@OneToOne(fetch = FetchType.EAGER)
-private Planter planter;
-
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonIgnore
+	private Integer plantId;
+	
+	@NotNull(message = "{null.invalid}")
+	@Min(value = 1 , message = "plant height cannot be zero")
+	private Double plantHeight;
+	
+	@NotNull(message = "{null.invalid}")
+	@Min(value = 1 , message = "plant spread cannot be zero")
+	private Double plantSpread;
+	
+	@NotBlank(message = "{blank.invalid}")
+	@NotNull(message = "{null.invalid}")
+	private String commonName;
+	
+	@NotBlank(message = "{blank.invalid}")
+	@NotNull(message = "{null.invalid}")
+	private String bloomTime;
+	
+	@NotBlank(message = "{blank.invalid}")
+	@NotEmpty(message = "{empty.invalid}")
+	private String medicinalOrCulinaryUse;
+	
+	@NotBlank(message = "{blank.invalid}")
+	@NotEmpty(message = "{empty.invalid}")
+	private String difficultyLevel;
+	
+	@NotBlank(message = "{blank.invalid}")
+	@NotEmpty(message = "{empty.invalid}")
+	private String temperature;
+	
+	@NotBlank(message = "{blank.invalid}")
+	@NotEmpty(message = "{empty.invalid}")
+	private String typeOfPlant;
+	
+	@NotBlank(message = "{blank.invalid}")
+	@NotEmpty(message = "{empty.invalid}")
+	@Size(min = 10,message = "Description cannot be less than 10 characters")
+	private String plantDescription;
+	
+	@Min(value = 0 , message = "plant stock cannot be negative")
+	@NotNull(message = "{null.invalid}")
+	private Integer plantsStock;
+	
+	@Min(value = 1 , message = "plant cost cannot be zero")
+	@NotNull(message = "{null.invalid}")
+	private Double plantCost;
 }
