@@ -22,12 +22,6 @@ public ResponseEntity<ErrorDetails> exception(Exception e,WebRequest req){
 	return new ResponseEntity<>(new ErrorDetails(e.getMessage(),req.getDescription(false),LocalDateTime.now()),HttpStatus.BAD_REQUEST);
 }
 
-@ExceptionHandler(PlantException.class)
-public ResponseEntity<ErrorDetails> PlantException(PlantException e,WebRequest req){
-	log.error("bad request");
-	return new ResponseEntity<>(new ErrorDetails(e.getMessage(),req.getDescription(false),LocalDateTime.now()),HttpStatus.BAD_REQUEST);
-}
-
 @ExceptionHandler(NoHandlerFoundException.class)
 public ResponseEntity<ErrorDetails> NoHandlerFoundException(NoHandlerFoundException e,WebRequest req){
 	log.error("bad request");
@@ -39,15 +33,56 @@ public ResponseEntity<ErrorDetails> MethodArgumentNotValidException(MethodArgume
 	log.error("bad request");
 	return new ResponseEntity<>(new ErrorDetails(e.getMessage(),req.getDescription(false),LocalDateTime.now()),HttpStatus.BAD_REQUEST);
 }
-
 @ExceptionHandler(CustomerException.class)
 public ResponseEntity<ErrorDetails> handleCustomerExceptions(CustomerException ce,WebRequest req){
 	
 	ErrorDetails myErrorDetails = new ErrorDetails();
+	log.error("bad request");
+	return new ResponseEntity<ErrorDetails>(new ErrorDetails(ce.getMessage(),req.getDescription(false),LocalDateTime.now()),HttpStatus.BAD_REQUEST);
+}
+@ExceptionHandler(SeedsException.class)
+public ResponseEntity<ErrorDetails> handleSeedExceptions(SeedsException ce,WebRequest req){
 	
-	
-	
+	ErrorDetails myErrorDetails = new ErrorDetails();
+	log.error("bad request");
 	return new ResponseEntity<ErrorDetails>(new ErrorDetails(ce.getMessage(),req.getDescription(false),LocalDateTime.now()),HttpStatus.BAD_REQUEST);
 }
 
+@ExceptionHandler(PlantException.class)
+public ResponseEntity<ErrorDetails> PlantException(PlantException e,WebRequest req){
+	log.error("bad request");
+	return new ResponseEntity<>(new ErrorDetails(e.getMessage(),req.getDescription(false),LocalDateTime.now()),HttpStatus.BAD_REQUEST);
+}
+
+@ExceptionHandler(PlanterException.class)
+public ResponseEntity<ErrorDetails> PlanterException(PlanterException e,WebRequest req){
+	log.error("bad request");
+	return new ResponseEntity<>(new ErrorDetails(e.getMessage(),req.getDescription(false),LocalDateTime.now()),HttpStatus.BAD_REQUEST);
+}
+@ExceptionHandler(OrdersException.class)
+public ResponseEntity<ErrorDetails> OrdersException(OrdersException e,WebRequest req){
+	log.error("bad request");
+	return new ResponseEntity<>(new ErrorDetails(e.getMessage(),req.getDescription(false),LocalDateTime.now()),HttpStatus.BAD_REQUEST);
+}
+@ExceptionHandler(LoginException.class)
+public ResponseEntity<ErrorDetails> LoginException(LoginException e,WebRequest req){
+	log.error("bad request");
+	return new ResponseEntity<>(new ErrorDetails(e.getMessage(),req.getDescription(false),LocalDateTime.now()),HttpStatus.BAD_REQUEST);
+}
+
+@ExceptionHandler(CartException.class)
+public ResponseEntity<ErrorDetails> CartException(CartException e,WebRequest req){
+	log.error("bad request");
+	return new ResponseEntity<>(new ErrorDetails(e.getMessage(),req.getDescription(false),LocalDateTime.now()),HttpStatus.BAD_REQUEST);
+}
+@ExceptionHandler(AddressException.class)
+public ResponseEntity<ErrorDetails> AddressException(AddressException e,WebRequest req){
+	log.error("bad request");
+	return new ResponseEntity<>(new ErrorDetails(e.getMessage(),req.getDescription(false),LocalDateTime.now()),HttpStatus.BAD_REQUEST);
+}
+@ExceptionHandler(AdminException.class)
+public ResponseEntity<ErrorDetails> AdminException(AdminException e,WebRequest req){
+	log.error("bad request");
+	return new ResponseEntity<>(new ErrorDetails(e.getMessage(),req.getDescription(false),LocalDateTime.now()),HttpStatus.BAD_REQUEST);
+}
 }
