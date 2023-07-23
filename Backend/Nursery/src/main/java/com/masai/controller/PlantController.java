@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,68 +15,77 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.masai.model.Plant;
-import com.masai.service.PlantServiceimpl;
+import com.masai.exception.PlantException;
+import com.masai.service.PlantService;
 
 import jakarta.validation.Valid;
 
 @RestController
+@CrossOrigin(origins = "*")
 public class PlantController {
+
 	@Autowired
-	private PlantServiceimpl plantService;
+	private PlantService plantService;
 	
-	@PostMapping("/plantSave")
-	public ResponseEntity<Plant> savePlantHandller(@Valid @RequestBody Plant plant) {
+	@PostMapping("/plants")
+	public ResponseEntity<Plant> addNewPlant(@Valid @RequestBody Plant plant) throws PlantException{
 		
-		Plant plantNew = plantService.addPlant(plant);
+		Plant newPlant = plantService.addPlant(plant);
 		
-		return new ResponseEntity<>(plantNew, HttpStatus.ACCEPTED);
-	}
-	
-	@PutMapping("/plantUpdate")
-	public ResponseEntity<Plant> updatePlantHandller(@Valid @RequestBody Plant plant) {
-		
-		Plant plantNew = plantService.updatePlant(plant);
-		
-		return new ResponseEntity<>(plantNew, HttpStatus.ACCEPTED);
+		return new ResponseEntity<Plant>(newPlant,HttpStatus.CREATED);
 	}
 	
-	@DeleteMapping("/plantDelete/{plantId}")
-	public ResponseEntity<Plant> DeletePlantHandller(@PathVariable Integer plantId) {
+	@PutMapping("/plants/{plantId}")
+	public ResponseEntity<Plant> updatePlant(@Valid @PathVariable Integer plantId, @RequestBody Plant plant) throws PlantException{ 
 		
-		Plant plantNew = plantService.deletePlant(plantId);
+		Plant existingPlant = plantService.updatePlant(plantId, plant);
 		
-		return new ResponseEntity<>(plantNew, HttpStatus.ACCEPTED);
+		return new ResponseEntity<Plant>(existingPlant,HttpStatus.OK);
 	}
 	
-	@GetMapping("/plantView/{plantId}")
-	public ResponseEntity<Plant> viewPlantHandller(@PathVariable Integer plantId) {
+	@DeleteMapping("/plants/{id}")
+	public ResponseEntity<Plant> deletePlant(@PathVariable("id") Integer plantId) throws PlantException{
 		
-		Plant plantNew = plantService.viewPlant(plantId);
+		Plant existingPlant = plantService.deletePlant(plantId);
 		
-		return new ResponseEntity<>(plantNew, HttpStatus.ACCEPTED);
+		return new ResponseEntity<Plant>(existingPlant,HttpStatus.OK);
+		
 	}
-
-	@GetMapping("/plantViewByName/{commonName}")
-	public ResponseEntity<Plant> viewPlantByNameHandller(@PathVariable String commonName) {
+	
+	@GetMapping("/plants/{plantId}")
+	public ResponseEntity<Plant> getPlantById(@PathVariable Integer plantId) throws PlantException{
 		
-		Plant plantNew = plantService.viewplant(commonName);
+		Plant existingPlant = plantService.viewPlant(plantId);
 		
-		return new ResponseEntity<>(plantNew, HttpStatus.ACCEPTED);
-	}
-
-	@GetMapping("/plantViewByTypeOfPlant/{typeOfPlant}")
-	public ResponseEntity<List<Plant>> viewPlantBytypeOfPlantHandller(@PathVariable String typeOfPlant) {
+		return new ResponseEntity<Plant>(existingPlant,HttpStatus.FOUND);
 		
-		List<Plant> plantNew = plantService.viewAllPlants(typeOfPlant);
-		
-		return new ResponseEntity<>(plantNew, HttpStatus.ACCEPTED);
 	}
 	
 	@GetMapping("/plants")
-	public ResponseEntity<List<Plant>> viewAllPlantHandller() {
+	public ResponseEntity<List<Plant>> findAllPlants() throws PlantException{
 		
-		List<Plant> plantNew = plantService.viewAllPlants();
+		List<Plant> plantList = plantService.viewAllPlants();
 		
-		return new ResponseEntity<>(plantNew, HttpStatus.ACCEPTED);
+		return new ResponseEntity<List<Plant>>(plantList,HttpStatus.FOUND);
 	}
+	
+	@GetMapping("/plantByCommonName/{commonName}")
+	public ResponseEntity<List<Plant>> findSeedByCommonName(@PathVariable String commonName) throws PlantException{
+		
+		List<Plant> plantList = plantService.viewPlant(commonName);
+		
+		return new ResponseEntity<List<Plant>>(plantList,HttpStatus.FOUND);		
+	}
+	
+	@GetMapping("/plantsByTypeOfPlant/{typeOfPlant}")
+	public ResponseEntity<List<Plant>> findSeedByTypeOfPlant(@PathVariable String typeOfPlant) throws PlantException{
+		
+		List<Plant> plantList = plantService.viewAllPlants(typeOfPlant);
+		
+		return new ResponseEntity<List<Plant>>(plantList,HttpStatus.FOUND);		
+	}
+	
+	
+	
+	
 }
