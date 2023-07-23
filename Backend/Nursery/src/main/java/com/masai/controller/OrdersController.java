@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,46 +15,63 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.masai.model.Orders;
-import com.masai.service.OrdersService;
+import com.masai.exception.OrdersException;
+import com.masai.service.OrderService;
 
 import jakarta.validation.Valid;
-import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@Slf4j
+@CrossOrigin(origins = "*")
 public class OrdersController {
-	
+
 	@Autowired
-	private OrdersService oredrSer;
+	private OrderService orderService;
 	
 	@PostMapping("/orders")
-	public ResponseEntity<Orders> addOrders(@Valid @RequestBody Orders orders){
-		log.info("Adding new Orders");
-		return new ResponseEntity<>(oredrSer.addOrders(orders), HttpStatus.CREATED);
+	public ResponseEntity<Orders> addOrder(@Valid @RequestBody Orders order) throws OrdersException{
+		
+		Orders savedOrder = orderService.addOrder(order);
+		
+		return new ResponseEntity<Orders>(savedOrder,HttpStatus.CREATED);
+		
 	}
 	
-	@PutMapping("/orders")
-	public ResponseEntity<Orders> updateOrders(@Valid @RequestBody Orders orders){
-		log.info("updating Orders details");
-		return new ResponseEntity<>(oredrSer.updateOrders(orders), HttpStatus.OK);
+	@PutMapping("/orders/{orderId}")
+	public ResponseEntity<Orders> updateOrder(@PathVariable Integer orderId ,@Valid @RequestBody Orders order) throws OrdersException{
+		
+		Orders updatedOrder = orderService.updateOrder(order,orderId);
+		
+		return new ResponseEntity<Orders>(updatedOrder,HttpStatus.OK);
+		
 	}
 	
 	@DeleteMapping("/orders/{orderId}")
-	public ResponseEntity<Orders> deleteOrders(@PathVariable Integer orderId){
-		log.info("Deleting Orders");
-		return new ResponseEntity<>(oredrSer.deleteOrders(orderId), HttpStatus.OK);
+	public ResponseEntity<Orders> deleteOrder(@PathVariable Integer orderId) throws OrdersException{
+		
+		Orders deletedOrder = orderService.deleteOrderById(orderId);
+		
+		return new ResponseEntity<Orders>(deletedOrder,HttpStatus.OK);
+		
 	}
 	
+	
 	@GetMapping("/orders/{orderId}")
-	public ResponseEntity<Orders> viewOrders(@PathVariable Integer orderId){
-		log.info("getting Orders by using order id");
-		return new ResponseEntity<>(oredrSer.viewOrders(orderId), HttpStatus.OK);
+	public ResponseEntity<Orders> viewOrder(@PathVariable Integer orderId) throws OrdersException{
+		
+		Orders order = orderService.viewOrder(orderId);
+		
+		return new ResponseEntity<Orders>(order,HttpStatus.OK);
+		
 	}
 	
 	@GetMapping("/orders")
-	public ResponseEntity<List<Orders>> viewAllOrders(){
-		log.info("getting all Orders");
-		return new ResponseEntity<>(oredrSer.viewAllOrders(), HttpStatus.OK);
+	public ResponseEntity<List<Orders>> viewAllOrder() throws OrdersException{
+		
+		List<Orders> orderList = orderService.viewAllOrders();
+		
+		return new ResponseEntity<List<Orders>>(orderList,HttpStatus.OK);
+		
 	}
-
+	
+	
 }
