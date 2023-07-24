@@ -3,7 +3,7 @@
 <h1 align="center">Nursery Management System</h1>
 
 <h2 align="center">
-  Plant Paradise Market
+  Green Fort
 </h2> 
 
 <p align="center">
@@ -61,7 +61,7 @@ https://dev.mysql.com/downloads/mysql/
 Clone the Repository
 
 ```bash
-git clone https://github.com/psudhansu/dangerous-powder-9842.git
+git clone https://github.com/1996shwetamg/healthy-discovery-1593.git
 ```
 
 Open MySQL Server
@@ -74,7 +74,7 @@ Create a New Database in SQL: "Nursery"
 Go to the Project Directory
 
 ```bas
-Open the PlantParadiseMarketApplication Folder with S.T.S
+Open the Backend Folder with S.T.S
 ```
 
 Go to **src/main/resources > application.properties** & change your username and password (MySQL server username & password)
@@ -90,7 +90,7 @@ To change the **Server Port**
 server.port=8080
 ```
 
-Go to **com.plantparadisemarket package > PlantParadiseMarketApplication.java**
+Go to **com.masai package > PlantParadiseMarketApplication.java**
 
 ```bash
 Run as Spring Boot App
@@ -100,10 +100,11 @@ Open the following URL for Swagger-UI
 http://localhost:8080/swagger-ui/
 ```
 ## Contributors
-- Sudhanshu Nayak(Team Lead)
-- Suryakant Singh
-- Prathamesh Chavan
-- Shweta Guranagoudar
+- Shweta Guranagoudar(Team Lead)
+- Sumit
+- Sanjay
+- Tushar
+- Ashish
 
 ## ![TECH_STACK](https://img.shields.io/badge/Acknowledgement-%231572B6.svg?style=for-the-badge)
 
