@@ -7,7 +7,7 @@
 </h2> 
 
 <p align="center">
-  <img src="https://github.com/psudhansu/dangerous-powder-9842/assets/111189783/3d7e7049-9436-40e0-b7e7-000cda5f5594)" alt="Description of the image" style="display: block; margin: 0 auto;">
+  <img src="https://github.com/1996shwetamg/healthy-discovery-1593/blob/main/Frontend/images/top-banner-small.avif" alt="Description of the image" style="display: block; margin: 0 auto;">
 </p>
 
 
