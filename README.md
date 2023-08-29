@@ -100,7 +100,7 @@ Open the following URL for Swagger-UI
 http://localhost:8080/swagger-ui/
 ```
 ## Contributors
-- Shweta Guranagoudar(Team Lead)
+- Shweta Guranagoudar
 - Sumit
 - Sanjay
 - Tushar
